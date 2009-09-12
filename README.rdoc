@@ -8,6 +8,7 @@ This is what sublayouts are for.
 
 === How to use sublayouts
 
+
 * Replace <%= yield %> or <%= @content_for_layout %> in your layout with <%= yield_with_sublayouts %>
 * Put your sublayout into app/views/sublayouts
 * Set the instance variable called @sublayout in the controller using 'sublayout' before_filter or manually
@@ -36,9 +37,12 @@ Imagine that in the layout there is a sidebar which can be the same or vary in d
 
 Default templates for a section are (by precedence):
 
-1) for an action: "app/views/#{@controller.controller_path}/#{@controller.action_name}_#{section_name}.html.erb"
-2) for a controller: "app/views/#{@controller.controller_path}/default_#{section_name}.html.erb"
-3) for an application: "app/views/sections/default_#{section_name}.html.erb"
+  1) for an action: 
+  "app/views/#{@controller.controller_path}/#{@controller.action_name}_#{section_name}.html.erb"
+  2) for a controller: 
+  "app/views/#{@controller.controller_path}/default_#{section_name}.html.erb"
+  3) for an application: 
+  "app/views/sections/default_#{section_name}.html.erb"
 
 You can change a default sections' location for an application defining ViewDriver::SECTIONS_DIR.
 
@@ -59,7 +63,7 @@ By default ViewDriver looks for templates with the "html.erb" extension. You can
   # be careful because it will require to check if a template exists for both extensions
   ViewDriver::SECTIONS_TEMPLATES_EXTENSIONS = ["html.erb", "rhtml"]
   
-ViewDriver caches templates' existence in production, check out ViewDriver::SectionsCollection#template_exists?.
+ViewDriver caches templates' existence in production, check out ViewDriver::SectionsCollection#template_exists?
   
 === How to change templates for sections
 
