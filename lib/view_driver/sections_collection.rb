@@ -32,10 +32,16 @@ module ViewDriver
     end
     
     def template_exists?(template)
-      file = File.join(RAILS_ROOT, 'app', 'views', template + ".html.erb")
-      return File.exists?(file) unless @controller.perform_caching
-      ApplicationController.existing_sections ||= {}
-      ApplicationController.existing_sections[template] ||= File.exists?(file)
+      ViewDriver::SECTIONS_TEMPLATES_EXTENSIONS.any? do |ext| 
+        basename = template + ".#{ext}"
+        file = File.join(RAILS_ROOT, 'app', 'views', basename)
+        unless @controller.perform_caching
+          File.exists?(file)
+        else
+          ApplicationController.existing_sections ||= {}
+          ApplicationController.existing_sections[basename] ||= File.exists?(file)
+        end
+      end
     end
     
   end

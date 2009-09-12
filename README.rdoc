@@ -50,17 +50,28 @@ For rendering there is a helper render_section, which can be put into your view 
 
 It will try to find the first template from the defaults above and render it, so if there is no default file for an action, it will take default for a controller and then for an application. If none of them are found it will render nothing.
 
-And you can specify where to take these sections from.
+==== Templates extensions
 
-=== sections before_filter to specify templates
+By default ViewDriver looks for templates with the "html.erb" extension. You can change this behaviour by defining ViewDriver::SECTIONS_TEMPLATES_EXTENSIONS, for example:
 
-Templates defined by sections before_filter are of higher precendence than the default ones.
+  ViewDriver::SECTIONS_TEMPLATES_EXTENSIONS = ["haml"]
 
-Still 'sections' is a before_filter it can be chained and controlled by standard options: :only, :except, :if, and :unless.
+  # be careful because it will require to check if a template exists for both extensions
+  ViewDriver::SECTIONS_TEMPLATES_EXTENSIONS = ["html.erb", "rhtml"]
+  
+ViewDriver caches templates' existence in production, check out ViewDriver::SectionsCollection#template_exists?.
+  
+=== How to change templates for sections
+
+You can do it by a 'sections' before_filter or manually (check out ViewDriver::ActionControllerExtensions::ClassMethods#sections for details).
+
+Templates defined by the 'sections' before_filter is of higher precendence than the default ones.
+
+Still the 'sections' is a before_filter it can be chained and controlled by standard options: :only, :except, :if, and :unless.
 
 It will be easier to get it through the examples.
 
-So let's assume that the current controller is PagesController.
+So let's assume that a controller for a current request is PagesController.
   
 ==== Default values for all sections
 
@@ -68,7 +79,7 @@ So let's assume that the current controller is PagesController.
   sections 'show'
   # so when you call render_section(:header) it will render 'pages/show_header' and if it doesn't exist it will look through the default chain
   
-  # if you pass the default value and the options hash, they will be merged
+  # if you pass the default value and the options hash, values will be merged
   # so this will take all the sections from users folder except sidebar, which will be default
   sections proc{|c| "users/#{c.action_name}"}, :sidebar => 'pages/default'
   
@@ -83,6 +94,7 @@ So let's assume that the current controller is PagesController.
 ==== Other examples
   
   # :sidebar will be 'unlogged_sidebar' if a user is not logged in and default otherwise
+  # because nil value is a signal to use default templates
   sections :sidebar => :sidebar_section
   
   protected

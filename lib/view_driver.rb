@@ -1,6 +1,7 @@
 module ViewDriver
   !defined?(SUBLAYOUTS_DIR)  && SUBLAYOUTS_DIR = 'sublayouts'
   !defined?(SECTIONS_DIR)    && SECTIONS_DIR   = 'sections'
+  !defined?(SECTIONS_TEMPLATES_EXTENSIONS) && SECTIONS_TEMPLATES_EXTENSIONS = ['html.erb']
 end
 
 require 'view_driver/normalized_section_template'

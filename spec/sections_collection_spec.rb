@@ -88,4 +88,35 @@ describe ViewDriver::SectionsCollection do
     end
   end
   
+  context 'template_exists?' do
+    
+    it "should ask File.exists? with possible template extensions" do
+      File.should_receive(:exists?).with(File.join(RAILS_ROOT, "app", "views", "pages/show_sidebar.html.erb")).and_return(true)
+      @collection.template_exists?("pages/show_sidebar").should be_true
+    end
+    
+    context "with caching" do
+      before(:each) do
+        @controller.should_receive(:perform_caching).at_most(2).and_return(true)
+      end
+      
+      after(:each) do
+        ApplicationController.existing_sections = nil
+      end
+      
+      it "should save the value" do
+        File.should_receive(:exists?).with(File.join(RAILS_ROOT, "app", "views", "pages/show_sidebar.html.erb")).and_return(true)
+        @collection.template_exists?("pages/show_sidebar").should be_true
+        ApplicationController.existing_sections.should == {"pages/show_sidebar.html.erb" => true}
+      end
+      
+      it "should not ask the file exist" do
+        ApplicationController.existing_sections = {"pages/show_sidebar.html.erb" => true}
+        @collection.template_exists?("pages/show_sidebar").should be_true
+      end
+      
+    end
+    
+  end
+  
 end
