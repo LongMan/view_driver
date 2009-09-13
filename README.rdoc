@@ -71,7 +71,7 @@ You can do it by a 'sections' before_filter or manually (check out ViewDriver::A
 
 Templates defined by the 'sections' before_filter is of higher precendence than the default ones.
 
-Still the 'sections' is a before_filter it can be chained and controlled by standard options: :only, :except, :if, and :unless.
+Since the 'sections' is a before_filter it can be chained and controlled by standard options: :only, :except, :if, and :unless.
 
 It will be easier to get it through the examples.
 
@@ -97,13 +97,12 @@ So let's assume that a controller for a current request is PagesController.
   
 ==== Other examples
   
-  # :sidebar will be 'unlogged_sidebar' if a user is not logged in and default otherwise
-  # because nil value is a signal to use default templates
+  # :sidebar will be 'unlogged_sidebar' if a user is not logged in and 'logged_sidebar' otherwise
   sections :sidebar => :sidebar_section
   
   protected
   def sidebar_section
-    logged_in? ? nil : 'unlogged'
+    logged_in? ? 'logged' : 'unlogged'
   end
   
   # the sections :sidebar and :navigations will be taken from the 'views/users' folder for :galleries and :users actions
