@@ -39,7 +39,8 @@ module ViewDriver
     # classes("class-without-conditions", ["logged-class", logged_in?], "third-class-without-conditions")
     def classes(*pairs)
       glued_classes = []
-      pairs.map do |pair| 
+      pairs.each do |pair| 
+        next if pair.blank?
         arr = Array(pair)
         raise ArgumentError, "css_class or [css_class, condition] are expected (got #{pair.inspect})" if arr.size.zero? || arr.size > 2
         glued_classes << arr[0] if arr[1] || arr.size == 1

@@ -50,11 +50,12 @@ describe ViewDriver::ViewHelpers do
     it "should return nil if nothing has been provided" do
       classes.should be_nil
     end
+    
+    it "should return nil if nil class has been provided" do
+      classes(nil).should be_nil
+    end
   
-    it "should raise an error if zero or more than 2 elements have been provided" do
-      lambda do
-        classes([])
-      end.should raise_error(ArgumentError)
+    it "should raise an error if more than 2 elements have been provided" do
       lambda do
         classes('class', ['1', '2', '3'])
       end.should raise_error(ArgumentError)
