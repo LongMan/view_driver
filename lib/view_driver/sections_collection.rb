@@ -39,7 +39,8 @@ module ViewDriver
           File.exists?(file)
         else
           ApplicationController.existing_sections ||= {}
-          ApplicationController.existing_sections[basename] ||= File.exists?(file)
+          ApplicationController.existing_sections[basename].nil? && ApplicationController.existing_sections[basename] = File.exists?(file)
+          ApplicationController.existing_sections[basename]
         end
       end
     end
