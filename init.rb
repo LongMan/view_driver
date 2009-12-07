@@ -1,1 +1,1 @@
-require 'view_driver'
+require File.dirname(__FILE__) + "/rails/init.rb"
