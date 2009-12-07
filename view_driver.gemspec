@@ -28,11 +28,14 @@ Gem::Specification.new do |s|
      "lib/view_driver/sections.rb",
      "lib/view_driver/sections_collection.rb",
      "lib/view_driver/view_helpers.rb",
+     "pkg/view_driver-0.1.0.gem",
+     "rails/init.rb",
      "spec/sections_collection_spec.rb",
      "spec/sections_spec.rb",
      "spec/spec_helper.rb",
      "spec/view_driver_action_controller_extensions_spec.rb",
-     "spec/view_helpers_spec.rb"
+     "spec/view_helpers_spec.rb",
+     "view_driver.gemspec"
   ]
   s.homepage = %q{http://github.com/macovsky/view_driver}
   s.rdoc_options = ["--charset=UTF-8"]
