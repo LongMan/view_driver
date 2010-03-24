@@ -48,7 +48,8 @@ module ViewDriver
         protected method.to_sym
       end
       
-      def default_section_templates(section, action_name)
+      def default_section_templates(section, action_name, options={})
+        controller_path = options[:controller_path] || self.controller_path
         [action_name, 'default'].map{|action| controller_path + "/#{action}_#{section}"} + [ViewDriver::SECTIONS_DIR + "/default_#{section}"]
       end
       
@@ -57,7 +58,7 @@ module ViewDriver
     module InstanceMethods
       
       def default_section_templates(section, action = nil)
-        self.class.default_section_templates(section, action || action_name)
+        self.class.default_section_templates(section, action || action_name, :controller_path => self.controller_path)
       end
       
       def parse_argument_for_sections(arg)
